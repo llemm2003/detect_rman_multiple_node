@@ -1,0 +1,1 @@
+# detect_rman_multiple_node
