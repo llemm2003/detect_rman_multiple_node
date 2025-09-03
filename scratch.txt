@@ -1,0 +1,142 @@
+NOTE:
+
+Use gv$rman_output(global) to gather all session_recid and session_stamp. 
+
+SELECT distinct a.inst_id 
+FROM 
+gv$rman_output a
+JOIN (select lower(name)||inst_id as inst_name from gv$database) b
+ON a.output LIKE '%'||b.inst_name||'%'
+
+
+select output from gv$rman_output where output like '%p014dvt2%'
+
+SELECT count(distinct a.inst_id )
+FROM 
+gv$rman_output a
+JOIN (select lower(name)||inst_id as inst_name from gv$database) b
+ON a.output LIKE '%'||b.inst_name||'%'
+
+
+
+select CASE WHEN nodes > 1 THEN 'Multiple'
+ELSE 'Ok' END AS 'Node'  
+FROM (
+SELECT count(distinct a.inst_id ) AS nodes
+FROM 
+gv$rman_output a
+JOIN (select lower(name)||inst_id as inst_name from gv$database) b
+ON a.output LIKE '%'||b.inst_name||'%'
+)
+
+SELECT CASE WHEN
+count(DISTINCT a.inst_id)  > 1 THEN 'Multiple'
+ELSE 'Ok' END 
+FROM 
+gv$rman_output a
+JOIN (select lower(name)||inst_id as inst_name from gv$database) b
+ON a.output LIKE '%'||b.inst_name||'%';
+
+
+
+
+SESSION_STAMP SESSION_RECID    INST_ID
+------------- ------------- ----------
+   1210358144        100086          2
+   1210285446        100025          1
+
+
+
+
+select lower(name) from v$database;
+select max(inst_id) from gv$database; - MAX rac inst.
+select lower(name)||inst_id from gv$database; - Whole rac instance. 
+
+   1210781709 channel ORA_SBT_TAPE_1: SID=13 instance=d01awu61 device type=SBT_TAPE
+   1210781709 channel ORA_SBT_TAPE_2: SID=2107 instance=d01awu61 device type=SBT_TAPE
+   1210781709 channel ORA_SBT_TAPE_3: SID=1530 instance=d01awu61 device type=SBT_TAPE
+   1210781709 channel ORA_SBT_TAPE_4: SID=982 instance=d01awu61 device type=SBT_TAPE
+   1210781709 channel ORA_SBT_TAPE_5: SID=1341 instance=d01awu61 device type=SBT_TAPE
+   1210781709 channel ORA_SBT_TAPE_6: SID=1545 instance=d01awu61 device type=SBT_TAPE
+   1210781709 channel ORA_DISK_1: SID=13 instance=d01awu61 device type=DISK
+   1210785909 channel ORA_SBT_TAPE_1: SID=970 instance=d01awu61 device type=SBT_TAPE
+   1210785909 channel ORA_SBT_TAPE_2: SID=1545 instance=d01awu61 device type=SBT_TAPE
+   1210785909 channel ORA_SBT_TAPE_3: SID=2867 instance=d01awu61 device type=SBT_TAPE
+   1210785909 channel ORA_SBT_TAPE_4: SID=1169 instance=d01awu61 device type=SBT_TAPE
+   1210785909 channel ORA_SBT_TAPE_5: SID=1541 instance=d01awu61 device type=SBT_TAPE
+   1210785909 channel ORA_SBT_TAPE_6: SID=206 instance=d01awu61 device type=SBT_TAPE
+   1210786144 channel ORA_SBT_TAPE_1: SID=1541 instance=d01awu61 device type=SBT_TAPE
+   1210786144 channel ORA_SBT_TAPE_2: SID=794 instance=d01awu61 device type=SBT_TAPE
+   1210786144 channel ORA_SBT_TAPE_3: SID=970 instance=d01awu61 device type=SBT_TAPE
+   1210786144 channel ORA_SBT_TAPE_4: SID=1545 instance=d01awu61 device type=SBT_TAPE
+   1210786144 channel ORA_SBT_TAPE_5: SID=2867 instance=d01awu61 device type=SBT_TAPE
+   1210786144 channel ORA_SBT_TAPE_6: SID=206 instance=d01awu61 device type=SBT_TAPE
+   1210786144 channel ORA_DISK_1: SID=415 instance=d01awu61 device type=DISK
+   1210788909 channel ORA_SBT_TAPE_1: SID=1341 instance=d01awu61 device type=SBT_TAPE
+   1210788909 channel ORA_SBT_TAPE_2: SID=2094 instance=d01awu61 device type=SBT_TAPE
+   1210788909 channel ORA_SBT_TAPE_3: SID=1562 instance=d01awu61 device type=SBT_TAPE
+   1210788909 channel ORA_SBT_TAPE_4: SID=408 instance=d01awu61 device type=SBT_TAPE
+   1210788909 channel ORA_SBT_TAPE_5: SID=800 instance=d01awu61 device type=SBT_TAPE
+   1210788909 channel ORA_SBT_TAPE_6: SID=1545 instance=d01awu61 device type=SBT_TAPE
+   1210788909 channel ORA_DISK_1: SID=1341 instance=d01awu61 device type=DISK
+   1210796110 channel ORA_SBT_TAPE_1: SID=1362 instance=d01awu61 device type=SBT_TAPE
+   1210796110 channel ORA_SBT_TAPE_2: SID=2877 instance=d01awu61 device type=SBT_TAPE
+   1210796110 channel ORA_SBT_TAPE_3: SID=982 instance=d01awu61 device type=SBT_TAPE
+   1210796110 channel ORA_SBT_TAPE_4: SID=13 instance=d01awu61 device type=SBT_TAPE
+   1210796110 channel ORA_SBT_TAPE_5: SID=2107 instance=d01awu61 device type=SBT_TAPE
+   1210796110 channel ORA_SBT_TAPE_6: SID=587 instance=d01awu61 device type=SBT_TAPE
+   1210796110 channel ORA_DISK_1: SID=1362 instance=d01awu61 device type=DISK
+   1210803309 channel ORA_SBT_TAPE_1: SID=970 instance=d01awu61 device type=SBT_TAPE
+   1210803309 channel ORA_SBT_TAPE_2: SID=2877 instance=d01awu61 device type=SBT_TAPE
+   1210803309 channel ORA_SBT_TAPE_3: SID=206 instance=d01awu61 device type=SBT_TAPE
+   1210803309 channel ORA_SBT_TAPE_4: SID=2091 instance=d01awu61 device type=SBT_TAPE
+   1210803309 channel ORA_SBT_TAPE_5: SID=1562 instance=d01awu61 device type=SBT_TAPE
+   1210803309 channel ORA_SBT_TAPE_6: SID=2677 instance=d01awu61 device type=SBT_TAPE
+   1210803309 channel ORA_DISK_1: SID=970 instance=d01awu61 device type=DISK
+   1210809614 channel D0: SID=1932 instance=d01awu61 device type=DISK
+   1210809677 channel D0: SID=1927 instance=d01awu61 device type=DISK
+   1210810509 channel ORA_SBT_TAPE_1: SID=2094 instance=d01awu61 device type=SBT_TAPE
+   1210810509 channel ORA_SBT_TAPE_2: SID=1932 instance=d01awu61 device type=SBT_TAPE
+   1210810509 channel ORA_SBT_TAPE_3: SID=1927 instance=d01awu61 device type=SBT_TAPE
+   1210810509 channel ORA_SBT_TAPE_4: SID=414 instance=d01awu61 device type=SBT_TAPE
+   1210810509 channel ORA_SBT_TAPE_5: SID=991 instance=d01awu61 device type=SBT_TAPE
+   1210810509 channel ORA_SBT_TAPE_6: SID=1520 instance=d01awu61 device type=SBT_TAPE
+   1210810509 channel ORA_DISK_1: SID=2094 instance=d01awu61 device type=DISK
+
+
+
+SQL> /
+
+SESSION_STAMP OUTPUT
+------------- -------------------------------------------------------------------------------------------------------
+---------------------------
+   1207679614 channel CH1: SID=1528 instance=d01awu62 device type=SBT_TAPE
+   1209071120 channel CH1: SID=2092 instance=d01awu62 device type=SBT_TAPE
+   1209767693    KBHS-01404: See trace file /u01/app/oracle/diag/rdbms/d01awu6_mel13q/d01awu62/trace/sbtio_72016_1405
+38107241664.log for detai
+   1209767693 RMAN Server Diagnostic Trace file : /u01/app/oracle/diag/rdbms/d01awu6_mel13q/d01awu62/trace/d01awu62_o
+ra_72016.trc
+   1209767693 RMAN Server Diagnostic Trace file : /u01/app/oracle/diag/rdbms/d01awu6_mel13q/d01awu62/trace/d01awu62_o
+ra_71940.trc
+   1210464251 channel CH1: SID=1147 instance=d01awu62 device type=SBT_TAPE
+   1210813316 channel ORA_SBT_TAPE_1: SID=2280 instance=d01awu62 device type=SBT_TAPE
+   1210813316 channel ORA_SBT_TAPE_2: SID=9 instance=d01awu62 device type=SBT_TAPE
+   1210813316 channel ORA_SBT_TAPE_3: SID=209 instance=d01awu62 device type=SBT_TAPE
+   1210813316 channel ORA_SBT_TAPE_4: SID=583 instance=d01awu62 device type=SBT_TAPE
+   1210813316 channel ORA_SBT_TAPE_5: SID=970 instance=d01awu62 device type=SBT_TAPE
+   1210813316 channel ORA_SBT_TAPE_6: SID=1147 instance=d01awu62 device type=SBT_TAPE
+   1210398729 channel ORA_SBT_TAPE_1: SID=1554 instance=d01awu61 device type=SBT_TAPE
+   1210398729 channel ORA_SBT_TAPE_2: SID=1530 instance=d01awu61 device type=SBT_TAPE
+   1210398729 channel ORA_SBT_TAPE_3: SID=2863 instance=d01awu61 device type=SBT_TAPE
+   1210398729 channel ORA_SBT_TAPE_4: SID=218 instance=d01awu61 device type=SBT_TAPE
+   1210398729 channel ORA_SBT_TAPE_5: SID=2694 instance=d01awu61 device type=SBT_TAPE
+
+
+
+select session_stamp,output from v$rman_output where regexp_like (output, 'd01awu6[12]')
+
+select session_recid, session_stamp from v$rman_output where output like '%d01awu62%';
+
+
+
+select session_stamp
