@@ -135,8 +135,302 @@ ra_71940.trc
 
 select session_stamp,output from v$rman_output where regexp_like (output, 'd01awu6[12]')
 
-select session_recid, session_stamp from v$rman_output where output like '%d01awu62%';
+select session_recid, session_stamp from v$rman_output where output like '%p01cccs2%';
+
+
+select session_recid, session_stamp from gv$rman_output where output like '%p01cccs2%';
+
+SESSION_RECID SESSION_STAMP
+------------- -------------
+        63838    1208082979
+
+
+select output from gv$rman_output where output like '%p01cccs2%';
+
+set lines 200
+set pages 1000
+select output
+from GV$RMAN_OUTPUT
+where session_stamp = 1208082979
+order by recid;
+
+
+select start_time, end_time from v$rman_status 
+where session_stamp = 1208082979 and session_recid=63838
+
+
+[oracle:p01cccs1:Production-Primary rman_logs]$ for i in *gz; do zcat $i| grep p01cccs2 && echo $i; done
+channel ORA_SBT_TAPE_1: SID=2693 instance=p01cccs2 device type=SBT_TAPE
+channel ORA_SBT_TAPE_2: SID=786 instance=p01cccs2 device type=SBT_TAPE
+channel ORA_SBT_TAPE_3: SID=2302 instance=p01cccs2 device type=SBT_TAPE
+channel ORA_DISK_1: SID=797 instance=p01cccs2 device type=DISK
+rman_p01cccs_20240511.log.gz
+channel ORA_SBT_TAPE_1: SID=20 instance=p01cccs2 device type=SBT_TAPE
+channel ORA_SBT_TAPE_2: SID=397 instance=p01cccs2 device type=SBT_TAPE
+channel ORA_SBT_TAPE_3: SID=781 instance=p01cccs2 device type=SBT_TAPE
+channel ORA_DISK_1: SID=20 instance=p01cccs2 device type=DISK
+rman_p01cccs_20250725.log.gz
+RMAN Server Diagnostic Trace file : /u01/app/oracle/diag/rdbms/p01cccs_iad2rj/p01cccs2/trace/p01cccs2_ora_48744.trc
+rman_p01cccs_20250726.log.gz
+RMAN Server Diagnostic Trace file : /u01/app/oracle/diag/rdbms/p01cccs_iad2rj/p01cccs2/trace/p01cccs2_m000_35669.trc
+rman_p01cccs_20250816.log.gz
+RMAN Server Diagnostic Trace file : /u01/app/oracle/diag/rdbms/p01cccs_iad2rj/p01cccs2/trace/p01cccs2_ora_12471.trc
+rman_p01cccs_20250823.log.gz
+
+
+select session_recid, session_stamp from gv$rman_output where output like '%SID=2693%';
+
+
+select session_recid, session_stamp from v$rman_output;
+
+
+        65874    1210813067
+        65874    1210813067
+        65874    1210813067
+        65874    1210813067
+
+SESSION_RECID SESSION_STAMP
+------------- -------------
+        65874    1210813067
+        65874    1210813067
+        65874    1210813067
+        65874    1210813067
+        65874    1210813067
+        65874    1210813067
+        65874    1210813067
+        65874    1210813067
+
+
+        65819    1210742857
+        65819    1210742857
+        65819    1210742857
+        65819    1210742857
+        65819    1210742857
+
+SESSION_RECID SESSION_STAMP
+------------- -------------
+        65819    1210742857
+        65819    1210742857
+        65819    1210742857
+        65819    1210742857
+        65819    1210742857
+        65819    1210742857
+        65819    1210742857
 
 
 
-select session_stamp
+
+select output from v$rman_output where session_recid=65682;
+
+SQL> select distinct session_recid from v$rman_output;
+
+SESSION_RECID
+-------------
+        65293
+        63439
+        63838
+        65496
+        65359
+        65690
+        65750
+        65874
+        65222
+        65423
+        65682
+
+SESSION_RECID
+-------------
+        65819
+        63885
+        64772
+        65166
+        65623
+        64326
+        65336
+        65547
+        65122
+        65230
+
+21 rows selected.
+
+
+
+SQL> select output from v$rman_output where session_recid=65423;
+
+OUTPUT
+--------------------------------------------------------------------------------
+connected to target database: P01CCCS (DBID=3800788056)
+
+SHOW SNAPSHOT CONTROLFILE NAME;
+
+using target database control file instead of recovery catalog
+RMAN configuration parameters for database with db_unique_name P01CCCS_IAD2RJ ar
+e:
+
+CONFIGURE SNAPSHOT CONTROLFILE NAME TO '+RECO/P01CCCS_IAD2RJ/controlfile/snapcf_
+p01cccs_iad2rj.f';
+
+
+OUTPUT
+--------------------------------------------------------------------------------
+
+
+
+
+
+
+12 rows selected.
+
+
+SQL> select output from v$rman_output where session_recid=65819;
+
+OUTPUT
+--------------------------------------------------------------------------------
+connected to target database: P01CCCS (DBID=3800788056)
+
+SHOW SNAPSHOT CONTROLFILE NAME;
+
+using target database control file instead of recovery catalog
+RMAN configuration parameters for database with db_unique_name P01CCCS_IAD2RJ ar
+e:
+
+CONFIGURE SNAPSHOT CONTROLFILE NAME TO '+RECO/P01CCCS_IAD2RJ/controlfile/snapcf_
+p01cccs_iad2rj.f';
+
+
+OUTPUT
+--------------------------------------------------------------------------------
+
+
+
+
+
+
+12 rows selected.
+
+
+
+
+
+
+SQL>  select output from gv$rman_output where session_recid=65935;
+
+OUTPUT
+--------------------------------------------------------------------------------
+connected to target database: P01CCCS (DBID=3800788056)
+
+set echo on
+
+set encryption ON;
+
+CONFIGURE COMPRESSION ALGORITHM 'LOW' AS OF RELEASE 'DEFAULT' OPTIMIZE FOR LOAD
+TRUE;
+
+
+CONFIGURE DEVICE TYPE SBT_TAPE PARALLELISM 3 BACKUP TYPE TO COMPRESSED BACKUPSET
+
+
+
+
+
+
+
+
+
+OUTPUT
+--------------------------------------------------------------------------------
+connected to target database: P01CCCS (DBID=3800788056)
+
+RUN {
+ALLOCATE CHANNEL CH1 DEVICE TYPE sbt PARMS 'SBT_LIBRARY=/opt/oracle/dcs/commonst
+ore/wallets/cbm/cbm_lib/libopc.so,SBT_PARM
+
+
+using target database control file instead of recovery catalog
+allocated channel: CH1
+channel CH1: SID=434 instance=p01cccs2 device type=SBT_TAPE
+channel CH1: Oracle Database Backup Service Library VER=19.0.0.1
+
+OUTPUT
+--------------------------------------------------------------------------------
+
+released channel: CH1
+
+
+
+
+
+
+
+
+
+Will show every command.
+using target database control file instead of recovery catalog
+
+
+
+
+
+
+
+select output from gv$rman_output where session_recid=65943;
+
+
+
+
+
+ explain plan for
+SELECT CASE WHEN
+count(DISTINCT a.inst_id)  > 1 THEN 'Multiple'
+ELSE 'Ok' END 
+FROM 
+gv$rman_output a
+JOIN (select 'instance='||lower(name)||inst_id as inst_name from gv$database) b
+ON a.output LIKE '%'||b.inst_name||'%'
+AND COUNT(a.session_recid<>12)
+GROUP BY a.session_recid, a.inst_id;
+
+
+
+select plan_table_output from table(dbms_xplan.display('plan_table',null,'basic'));
+
+PLAN_TABLE_OUTPUT
+--------------------------------------------------------------------------------
+Plan hash value: 3358025751
+
+-------------------------------------------------------
+| Id  | Operation                    | Name           |
+-------------------------------------------------------
+|   0 | SELECT STATEMENT             |                |
+|   1 |  SORT AGGREGATE              |                |
+|   2 |   VIEW                       | VM_NWVW_1      |
+|   3 |    HASH GROUP BY             |                |
+|   4 |     HASH JOIN SEMI           |                |
+|   5 |      NESTED LOOPS            |                |
+
+PLAN_TABLE_OUTPUT
+--------------------------------------------------------------------------------
+|   6 |       PX COORDINATOR         |                |
+|   7 |        PX SEND QC (RANDOM)   | :TQ10000       |
+|   8 |         VIEW                 | GV$DATABASE    |
+|   9 |          MERGE JOIN CARTESIAN|                |
+|  10 |           FIXED TABLE FULL   | X$KCCDI        |
+|  11 |           BUFFER SORT        |                |
+|  12 |            FIXED TABLE FULL  | X$KCCDI2       |
+|  13 |       PX COORDINATOR         |                |
+|  14 |        PX SEND QC (RANDOM)   | :TQ20000       |
+|  15 |         VIEW                 | GV$RMAN_OUTPUT |
+|  16 |          FIXED TABLE FULL    | X$KRBMROT      |
+
+PLAN_TABLE_OUTPUT
+--------------------------------------------------------------------------------
+|  17 |      VIEW                    |                |
+|  18 |       HASH GROUP BY          |                |
+|  19 |        PX COORDINATOR        |                |
+|  20 |         PX SEND QC (RANDOM)  | :TQ30000       |
+|  21 |          VIEW                | GV$RMAN_OUTPUT |
+|  22 |           FIXED TABLE FULL   | X$KRBMROT      |
+-------------------------------------------------------
+
+29 rows selected.
+
